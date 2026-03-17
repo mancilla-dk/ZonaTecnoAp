@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta content='width=device-width, initial-scale=1' name='viewport'/>
     <title>ZonaTecno - Apps Premium</title>
-    
+        <meta name="monetag" content="e85d214b3c84a55d890bf0742f06aca5">
+    <meta name='admaven-placement' content=BqjsHrdUE>
+
         <link href='style.css' rel='stylesheet'/>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css' rel='stylesheet'/>
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700;900&display=swap" rel="stylesheet">
@@ -395,33 +397,57 @@
 
         <div id="admin-tab-apps" class="admin-form">
             <input type="hidden" id="app-id">
+                                                <div style="display:flex; gap:10px; margin-bottom:15px; border-bottom: 1px solid #333; padding-bottom: 15px;">
+                <label style="color:#fff; font-size:12px; cursor:pointer;"><input type="radio" name="post-type" value="apk" checked onchange="window.togglePostType()"> 📦 App/APK</label>
+                <label style="color:#fff; font-size:12px; cursor:pointer;"><input type="radio" name="post-type" value="info" onchange="window.togglePostType()"> 📰 Información</label>
+            </div>
+            <script>
+                window.togglePostType = function() {
+                    const isInfo = document.querySelector('input[name="post-type"]:checked').value === 'info';
+                    const metaSection = document.getElementById('admin-meta-section');
+                    if (metaSection) {
+                        metaSection.style.display = isInfo ? 'none' : 'block';
+                    }
+                    if (isInfo) {
+                        const catSelect = document.getElementById('app-category');
+                        if (catSelect) catSelect.value = 'Informacion';
+                    }
+                }
+            </script>
+
                  <span class="admin-group-label">INFORMACIÓN BÁSICA</span>
             <input type="text" id="app-title" placeholder="Nombre App (Ej: Photo Editor)">
             <input type="text" id="app-version" placeholder="Versión (Ej: 1.465.114)">
             <input type="text" id="app-size" placeholder="Tamaño (Ej: 18 MB)">
             <div style="font-size:10px; color:var(--neon-green); margin-bottom:10px; text-align:center; background: rgba(0,255,170,0.1); padding: 5px; border-radius: 5px;"><i class="fa-solid fa-clock"></i> La fecha de actualización se guardará automáticamente hoy.</div>       
             
-                        <span class="admin-group-label">METADATOS</span>
-            <select id="app-category" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #222; border: 1px solid #444; color: #fff; border-radius: 5px; font-size: 13px; font-family: inherit; outline: none; cursor: pointer;">
-                <option value="Entretenimiento">Entretenimiento</option>
-                <option value="Musica">Música</option>
-                <option value="EdicionVideo">Edición Video</option>
-                <option value="EdicionImagen">Fotografía / Edición Imagen</option>
-                <option value="Juegos">Juegos</option>
-                <option value="Utilidades">Utilidades</option>
-                <option value="RedesSociales">Redes Sociales</option>
-                <option value="Informativo">Informativo</option>
-            </select>
-            <input type="text" id="app-developer" placeholder="Desarrollador (Ej: InShot Inc.)">
+                                   <div id="admin-meta-section">
+                <span class="admin-group-label">METADATOS</span>
+                <select id="app-category" style="width: 100%; padding: 10px; margin-bottom: 10px; background: #222; border: 1px solid #444; color: #fff; border-radius: 5px; font-size: 13px; font-family: inherit; outline: none; cursor: pointer;">
+                    <option value="Entretenimiento">Entretenimiento</option>
+                    <option value="Musica">Música</option>
+                    <option value="EdicionVideo">Edición Video</option>
+                    <option value="EdicionImagen">Fotografía / Edición Imagen</option>
+                    <option value="Juegos">Juegos</option>
+                    <option value="Utilidades">Utilidades</option>
+                                       <option value="RedesSociales">Redes Sociales</option>
+                    <option value="Informacion">Información</option>
+                </select>
 
-            <input type="text" id="app-tags" placeholder="Tags (Ej: Premium, Mod, Editor)">
-            <input type="text" id="app-mod-info" placeholder="Mod Info (Ej: Premium Desbloqueado)">
+                <input type="text" id="app-developer" placeholder="Desarrollador (Ej: InShot Inc.)">
+                <input type="text" id="app-tags" placeholder="Tags (Ej: Premium, Mod, Editor)">
+                <input type="text" id="app-mod-info" placeholder="Mod Info (Ej: Premium Desbloqueado)">
+            </div>
+
             
-            <span class="admin-group-label">IMÁGENES Y VIDEO</span>
-            <input type="text" id="app-image" placeholder="URL Icono Principal (Se llenará solo al subir imagen)">
-            <label style="font-size: 11px; color: #aaa; margin-bottom: 5px; display: block;">Subir Logo a Cloudinary (Carpeta Apstore):</label>
-            <input type="file" id="app-image-file" accept="image/*" style="background:#222; border:1px solid #444; color:#fff; padding:10px; width:100%; margin-bottom:5px; border-radius:5px;">
-               <div id="upload-status" style="color:var(--neon-green); font-size:11px; margin-bottom:10px; font-weight:bold;"></div>
+                       <span class="admin-group-label">IMÁGENES Y VIDEO</span>
+            <div id="admin-logo-section">
+                <input type="text" id="app-image" placeholder="URL Icono Principal (Se llenará solo al subir imagen)">
+                <label style="font-size: 11px; color: #aaa; margin-bottom: 5px; display: block;">Subir Logo a Cloudinary (Carpeta Apstore):</label>
+                <input type="file" id="app-image-file" accept="image/*" style="background:#222; border:1px solid #444; color:#fff; padding:10px; width:100%; margin-bottom:5px; border-radius:5px;">
+                <div id="upload-status" style="color:var(--neon-green); font-size:11px; margin-bottom:10px; font-weight:bold;"></div>
+            </div>
+
             <div id="admin-carousel-container"></div>
             <button onclick="addCarouselInput()" style="background:#333; color:#fff; border:none; padding:8px; border-radius:5px; width:100%; cursor:pointer; font-size:11px; margin-bottom:10px;"><i class="fa-solid fa-plus"></i> AGREGAR OTRA IMAGEN AL CARRUSEL</button>
            
@@ -436,7 +462,16 @@
                <span class="admin-group-label">ENLACES DE DESCARGA</span>
             <div id="admin-downloads-container"></div>
             <button onclick="addDownloadInput('DESCARGA RECOMENDABLE', '')" style="background:#333; color:#fff; border:none; padding:8px; border-radius:5px; width:100%; cursor:pointer; font-size:11px; margin-bottom:10px;"><i class="fa-solid fa-plus"></i> AÑADIR OTRO BOTÓN</button>
-           
+                       <div style="display:flex; align-items:center; margin-bottom:10px; gap:10px; background: rgba(0,224,255,0.05); padding: 10px; border-radius: 5px;">
+                <input type="checkbox" id="app-show-ad-modal" checked style="width:auto; margin:0; cursor:pointer;">
+                <label for="app-show-ad-modal" style="font-size:12px; color:#fff; cursor:pointer;">Activar ventana emergente de publicidad en la descarga</label>
+            </div>
+            <span class="admin-group-label">TIPO DE DESCARGA</span>
+            <div style="display:flex; gap:10px; margin-bottom:15px; border-bottom: 1px solid #333; padding-bottom: 15px;">
+                <label style="color:#fff; font-size:12px; cursor:pointer;"><input type="radio" name="app-download-type" value="cuty" checked> Link Cuty (Temporizador)</label>
+                <label style="color:#fff; font-size:12px; cursor:pointer;"><input type="radio" name="app-download-type" value="ads"> Desbloqueo con Anuncios</label>
+            </div>
+
             <span class="admin-group-label">VERSIONES ANTERIORES</span>
             <div style="display:flex; align-items:center; margin-bottom:10px; gap:10px;">
                 <input type="checkbox" id="app-ver-old-active" style="width:auto; margin:0; cursor:pointer;" onchange="document.getElementById('old-ver-container').style.display = this.checked ? 'block' : 'none'">
@@ -513,10 +548,11 @@
             <a href='#' onclick="filterApps('EdicionVideo'); toggleMenu()"><i class='fa-solid fa-clapperboard'></i> Edición Video</a>
             <a href='#' onclick="filterApps('EdicionImagen'); toggleMenu()"><i class='fa-solid fa-palette'></i> Fotografía</a>
             <a href='#' onclick="filterApps('Juegos'); toggleMenu()"><i class='fa-solid fa-gamepad'></i> Juegos</a>
-            <a href='#' onclick="filterApps('Utilidades'); toggleMenu()"><i class='fa-solid fa-toolbox'></i> Utilidades</a>
-            <a href='#' onclick="filterApps('Informativo'); toggleMenu()"><i class='fa-solid fa-newspaper'></i> Informativo</a>
-            
+                        <a href='#' onclick="filterApps('Utilidades'); toggleMenu()"><i class='fa-solid fa-toolbox'></i> Utilidades</a>
+            <a href='#' onclick="filterApps('Informacion'); toggleMenu()"><i class='fa-solid fa-newspaper'></i> Información</a>
+
             <div class='divider'></div>
+
             <a href='#' onclick="showFaq(); toggleMenu();"><i class='fa-solid fa-circle-question'></i> Ayuda / FAQ</a>
         </div>
     </div>
@@ -628,11 +664,12 @@
                     <div class='card-action'><span>ABRIR</span></div>
                 </a>
 
-                <a class='store-card neon-gemini' href='#' onclick="filterApps('Informativo')">
+                               <a class='store-card neon-gemini' href='#' onclick="filterApps('Informacion')">
                     <div class='card-icon'><i class='fa-solid fa-newspaper'></i></div>
-                    <div class='card-details'><h3>INFORMATIVO</h3><p>Noticias y Más</p></div>
+                    <div class='card-details'><h3>INFORMACIÓN</h3><p>Noticias y Más</p></div>
                     <div class='card-action'><span>ABRIR</span></div>
                 </a>
+
             </section>
         </div>
 
@@ -683,9 +720,10 @@
                         </header>
                         <div class="product-metadata-section">
                             <div class="product-header-flex">
-                                <div class="product-image-container">
-                                    <img id="detail-icon" src="" alt="Icono App">
+                                                                <div class="product-image-container">
+                                    <img id="detail-icon" src="" alt="Icono App" onerror="this.src='https://cdn-icons-png.flaticon.com/512/104/104663.png'">
                                 </div>
+
                                  <div class="product-title-block">
                                     <h1 id="detail-title">TITULO</h1>
                                     <span class="product-version" id="detail-cat-header" style="color: var(--color-neon-cyan);">CATEGORÍA</span>
@@ -898,9 +936,10 @@
                                     </div>
                                     <button type="submit" class="submit-button problem-submit-button">ENVIAR REPORTE</button>
                                 </div>
-                                  <label for="correo" class="comment-label">Correo electrónico <span class="required-star">*</span></label>
-                                <input type="email" id="correo" name="email" required>
+                                   <label for="correo" class="comment-label">Correo electrónico <span class="required-star">*</span></label>
+                                <input type="email" id="correo" name="email" required class="form-input" placeholder="INGRESA TU CORREO AQUÍ">
                             </form>
+                                 
                             <div style="width: 100%; max-width: 100%; display: flex; justify-content: center; align-items: center; overflow: hidden; margin: 30px auto 0 auto; padding: 0;">
                                 <script>
                                   atOptions = {
@@ -1074,6 +1113,15 @@
             </div>
         </div>
     </div>
+    <div id="delete-confirm-modal" class="admin-modal" style="max-width: 320px; top: 40%; text-align: center; border-color: var(--neon-red); z-index: 4000;">
+        <h3 style="color:var(--neon-red); border:none; margin-bottom:10px;"><i class="fa-solid fa-triangle-exclamation"></i> ELIMINAR APP</h3>
+        <p style="font-size:13px; color:#fff; margin-bottom:20px;">¿Seguro que deseas eliminar esta publicación permanentemente?</p>
+        <input type="hidden" id="delete-target-id">
+        <div class="admin-btns">
+            <button class="btn-cancel" onclick="document.getElementById('delete-confirm-modal').style.display='none'; document.getElementById('dl-overlay').classList.remove('active');">CANCELAR</button>
+            <button class="btn-save" style="background: var(--neon-red); color: #fff;" onclick="executeDeleteApp()">SÍ, ELIMINAR</button>
+        </div>
+    </div>
 
         <div id="download-timer-modal" class="admin-modal" style="max-width: 350px; top: 50%; text-align: center; z-index: 4000; border-color: var(--neon-green); padding: 15px;">
         <h3 style="color:var(--neon-yellow); border:none; margin-bottom:15px; font-size: 15px;"><i class="fa-solid fa-clock"></i> PREPARANDO DESCARGA</h3>
@@ -1091,7 +1139,22 @@
     </div>
 
     <div class="menu-overlay" id="dl-overlay" style="z-index: 3999;"></div>
-    
+        <div id="ad-unlock-modal" class="admin-modal" style="max-width: 350px; top: 50%; text-align: center; z-index: 4000; border-color: var(--neon-purple); padding: 25px 20px;">
+        <i class="fa-solid fa-xmark" style="color:#fff; font-size:20px; cursor:pointer; position:absolute; top:15px; right:15px;" onclick="document.getElementById('ad-unlock-modal').style.display='none'; document.getElementById('dl-overlay').classList.remove('active');"></i>
+        <h3 style="color:var(--neon-purple); border:none; margin-bottom:15px; font-size: 16px;"><i class="fa-solid fa-unlock-keyhole"></i> DESBLOQUEAR DESCARGA</h3>
+        <p style="font-size:12px; color:#aaa; margin-bottom:20px;">Por favor, completa los siguientes pasos para revelar el enlace directo. Esto nos ayuda a mantener el sitio gratuito.</p>
+        
+        <button id="btn-ad-step-1" onclick="executeAdStep(1)" style="width:100%; padding:12px; margin-bottom:10px; background:var(--neon-blue); color:#000; font-weight:bold; border:none; border-radius:5px; cursor:pointer; transition:0.3s;">Paso 1: Ver Publicidad</button>
+        
+        <button id="btn-ad-step-2" onclick="executeAdStep(2)" style="width:100%; padding:12px; margin-bottom:10px; background:#333; color:#666; font-weight:bold; border:none; border-radius:5px; cursor:not-allowed; transition:0.3s;" disabled>Paso 2: Bloqueado</button>
+        
+        <button id="btn-ad-step-3" onclick="executeAdStep(3)" style="width:100%; padding:12px; margin-bottom:15px; background:#333; color:#666; font-weight:bold; border:none; border-radius:5px; cursor:not-allowed; transition:0.3s;" disabled>Paso 3: Ver Publicidad Final</button>
+        
+        <a id="btn-ad-final" href="#" target="_blank" style="display:none; width:100%; padding:12px; background:var(--neon-green); color:#000; font-weight:bold; border:none; border-radius:5px; text-decoration:none; cursor:pointer;">¡DESCARGAR AHORA!</a>
+        
+        <p id="ad-unlock-status" style="font-size:12px; color:var(--neon-yellow); margin-top:10px; font-weight:bold; height:15px;"></p>
+    </div>
+
     <script src='https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js'></script>
     
     <script type="module">
@@ -1146,11 +1209,28 @@
             const app = allApps.find(a => a.id === appId);
             if(!app) return;
 
-            // 1. INYECTAR DATOS DE TEXTO
+                                 // 1. INYECTAR DATOS DE TEXTO
             setText('detail-title', app.title);
-            setImg('detail-icon', app.image);
-            
             setText('detail-cat-header', app.category || 'GENERAL');
+
+            const isInfoNode = (app.postType === 'info' || app.category === 'Informacion');
+            const logoContainer = document.querySelector('.product-image-container');
+            const metaBox = document.querySelector('.product-info-list');
+
+            if (isInfoNode) {
+                if (metaBox) metaBox.style.display = 'none';
+                if (app.image && app.image.trim() !== '') {
+                    if (logoContainer) logoContainer.style.display = 'flex';
+                    setImg('detail-icon', app.image);
+                } else {
+                    if (logoContainer) logoContainer.style.display = 'none';
+                }
+            } else {
+                if (metaBox) metaBox.style.display = 'grid';
+                if (logoContainer) logoContainer.style.display = 'flex';
+                setImg('detail-icon', app.image && app.image.trim() !== '' ? app.image : 'https://cdn-icons-png.flaticon.com/512/104/104663.png');
+            }
+
             setText('detail-name-meta', app.title);
             setText('detail-cat-meta', app.category || 'N/A');
             setText('detail-dev-meta', app.developer || 'N/A');
@@ -1210,13 +1290,29 @@
                 if(app.linkAlt) dls.push({name: app.nameAlt || 'DESCARGAR ALTERNATIVO', link: app.linkAlt});
             }
           
-            dls.forEach((d, i) => {
+                        dls.forEach((d, i) => {
                 const a = document.createElement('a');
-                a.href = "#"; a.innerText = d.name;
+                               const isDirect = (app.showAdModal === false && app.downloadType !== 'ads');
+                a.href = isDirect ? d.link : "#";
+                if(isDirect) a.target = "_blank";
+                a.innerText = d.name;
                 a.className = "download-button " + (i === 0 ? "option-1" : (i === 1 ? "option-2" : "option-3"));
-                a.onclick = (e) => { e.preventDefault(); startDownloadTimer(d.link); };
+                                
+                if(!isDirect) {
+                    a.onclick = (e) => { 
+                        e.preventDefault(); 
+                        if (app.downloadType === 'ads') {
+                            window.startAdUnlockModal(d.link);
+                        } else {
+                            window.startDownloadTimer(d.link); 
+                        }
+                    };
+                }
+
+
                 dlContainer.appendChild(a);
             });
+
      
             // Video
                         
@@ -1246,9 +1342,24 @@
                     a.style.display = "block";
                     a.style.marginBottom = "8px";
                     a.style.fontWeight = "bold";
-                    a.style.color = (i % 2 === 0) ? "var(--color-neon-lime)" : "var(--color-neon-cyan)";
-                    a.onclick = (e) => { e.preventDefault(); startDownloadTimer(v.link); };
-                    oldVersContainer.appendChild(a);
+                                       a.style.color = (i % 2 === 0) ? "var(--color-neon-lime)" : "var(--color-neon-cyan)";
+                                                                                              const isDirectOld = (app.showAdModal === false && app.downloadType !== 'ads');
+                    if(isDirectOld) {
+                        a.href = v.link;
+                        a.target = "_blank";
+                    } else {
+                        a.onclick = (e) => { 
+                            e.preventDefault(); 
+                            if (app.downloadType === 'ads') {
+                                window.startAdUnlockModal(v.link);
+                            } else {
+                                window.startDownloadTimer(v.link); 
+                            }
+                        };
+                    }
+
+ oldVersContainer.appendChild(a);
+ 
                 });
             } else {
                 otherVerSection.style.display = 'none';
@@ -1385,10 +1496,11 @@
                         <i class="fa-solid fa-trash delete-btn" style="color:#ff3333;" onclick="deleteApp('${app.id}')"></i>
                     </div>` : '';
                 
-                const html = `
+                                const html = `
                     <div class='custom-post' onclick="viewAppDetails('${app.id}')">
                         ${adminControls}
-                        <img class='post-thumb' src='${app.image}' onerror="this.src='https://cdn-icons-png.flaticon.com/512/104/104663.png'">
+                        <img class='post-thumb' src='${app.image && app.image.trim() !== "" ? app.image : "https://cdn-icons-png.flaticon.com/512/104/104663.png"}' onerror="this.src='https://cdn-icons-png.flaticon.com/512/104/104663.png'">
+
                         <div class='post-info'>
                             <h3 class='post-title'>${app.title}</h3>
                             <div class='post-tags-inline'>
@@ -1449,7 +1561,10 @@
                             
                 color1: document.getElementById('app-color-1').value,
                 color2: document.getElementById('app-color-2').value,
-                installSteps: document.getElementById('app-install-steps') ? document.getElementById('app-install-steps').value : "",
+                                installSteps: document.getElementById('app-install-steps') ? document.getElementById('app-install-steps').value : "",
+                postType: document.querySelector('input[name="post-type"]:checked') ? document.querySelector('input[name="post-type"]:checked').value : 'apk',
+                                showAdModal: document.getElementById('app-show-ad-modal') ? document.getElementById('app-show-ad-modal').checked : true,
+                downloadType: document.querySelector('input[name="app-download-type"]:checked') ? document.querySelector('input[name="app-download-type"]:checked').value : 'cuty',
                 timestamp: Date.now()
             };
 
@@ -1484,10 +1599,25 @@
                         'app-desc-short': app.descShort, 'app-desc-full': app.descFull, 
                 'app-color-1': app.color1 || '#FF00FF', 'app-color-2': app.color2 || '#8BC34A',
                         
-                'app-install-steps': app.installSteps || ""
+                                'app-install-steps': app.installSteps || ""
             };
             for(let key in fields) { if(document.getElementById(key)) document.getElementById(key).value = fields[key] || ""; }
-            document.getElementById('app-ver-old-active').checked = app.oldVerActive || false;
+
+                        document.getElementById('app-ver-old-active').checked = app.oldVerActive || false;
+            if(document.getElementById('app-show-ad-modal')) document.getElementById('app-show-ad-modal').checked = (app.showAdModal !== false);
+            if(app.downloadType === 'ads') {
+                if(document.querySelector('input[name="app-download-type"][value="ads"]')) document.querySelector('input[name="app-download-type"][value="ads"]').checked = true;
+            } else {
+                if(document.querySelector('input[name="app-download-type"][value="cuty"]')) document.querySelector('input[name="app-download-type"][value="cuty"]').checked = true;
+            }
+                        if(app.postType === 'info') {
+
+                if(document.querySelector('input[name="post-type"][value="info"]')) document.querySelector('input[name="post-type"][value="info"]').checked = true;
+            } else {
+                if(document.querySelector('input[name="post-type"][value="apk"]')) document.querySelector('input[name="post-type"][value="apk"]').checked = true;
+            }
+            if(window.togglePostType) window.togglePostType();
+
             document.getElementById('old-ver-container').style.display = (app.oldVerActive || false) ? 'block' : 'none';
             
             document.getElementById('admin-carousel-container').innerHTML = "";
@@ -1520,17 +1650,27 @@
             document.getElementById('admin-modal').style.display = 'block';
         }
 
-        window.deleteApp = async function(id) { 
-            if(confirm("¿Seguro que deseas eliminar esta app permanentemente?")) { 
-                try {
-                    await remove(ref(database, "apps/" + id)); 
-                    showToast("App eliminada correctamente");
-                    await loadAppsFromFirebase(); 
-                    loadAllApps(); 
-                } catch(e) {
-                    showToast("Error al eliminar: " + e.message, true);
-                }
-            } 
+              window.deleteApp = function(id) { 
+            document.getElementById('delete-target-id').value = id;
+            document.getElementById('delete-confirm-modal').style.display = 'block';
+            document.getElementById('dl-overlay').classList.add('active'); // Fondo oscuro
+        }
+
+        window.executeDeleteApp = async function() {
+            const id = document.getElementById('delete-target-id').value;
+            const btn = document.querySelector('#delete-confirm-modal .btn-save');
+            btn.innerText = "Eliminando...";
+            try {
+                await remove(ref(database, "apps/" + id)); 
+                showToast("Publicación eliminada correctamente");
+                document.getElementById('delete-confirm-modal').style.display = 'none';
+                document.getElementById('dl-overlay').classList.remove('active');
+                await loadAppsFromFirebase(); 
+                loadAllApps(); 
+            } catch(e) {
+                showToast("Error al eliminar: " + e.message, true);
+            }
+            btn.innerText = "SÍ, ELIMINAR";
         }
 
         window.searchApps = function() {
@@ -1548,14 +1688,21 @@
                 window.openPanel = async () => {
             
                document.getElementById('app-id').value = "";
-            const inputs = document.querySelectorAll('#admin-tab-apps input:not([type="color"]), #admin-tab-apps textarea');
+                        const inputs = document.querySelectorAll('#admin-tab-apps input:not([type="color"]):not([type="radio"]):not([type="checkbox"]), #admin-tab-apps textarea');
+
             inputs.forEach(input => input.value = "");
              document.getElementById('admin-carousel-container').innerHTML = ""; addCarouselInput();
             document.getElementById('admin-downloads-container').innerHTML = ""; 
             addDownloadInput("DESCARGA RECOMENDABLE", "");
-            document.getElementById('admin-old-versions-container').innerHTML = "";
+                        document.getElementById('admin-old-versions-container').innerHTML = "";
             addOldVersionInput("Versión 1.0", "");
-                                               document.getElementById('login-modal').style.display = 'none';
+                        
+                          if(document.getElementById('app-show-ad-modal')) document.getElementById('app-show-ad-modal').checked = true;
+            if(document.querySelector('input[name="post-type"][value="apk"]')) document.querySelector('input[name="post-type"][value="apk"]').checked = true;
+            if(document.querySelector('input[name="app-download-type"][value="cuty"]')) document.querySelector('input[name="app-download-type"][value="cuty"]').checked = true;
+            if(window.togglePostType) window.togglePostType();
+                document.getElementById('login-modal').style.display = 'none';
+
               document.getElementById('admin-modal').style.display = 'block';
             await loadSiteConfig();
         };
@@ -1739,6 +1886,125 @@
 
                 }
             }, 1000);
+        };
+        window.currentAdFinalLink = "";
+        
+        window.startAdUnlockModal = function(url) {
+            if(!url || url === '#' || url.trim() === '') return showToast('Enlace no disponible', true);
+            window.currentAdFinalLink = url;
+            const modal = document.getElementById('ad-unlock-modal');
+            const overlay = document.getElementById('dl-overlay');
+            
+            document.getElementById('btn-ad-step-1').style.background = 'var(--neon-blue)';
+            document.getElementById('btn-ad-step-1').style.color = '#000';
+            document.getElementById('btn-ad-step-1').innerText = 'Paso 1: Ver Publicidad';
+            document.getElementById('btn-ad-step-1').disabled = false;
+            document.getElementById('btn-ad-step-1').style.cursor = 'pointer';
+
+            document.getElementById('btn-ad-step-2').style.background = '#333';
+            document.getElementById('btn-ad-step-2').style.color = '#666';
+            document.getElementById('btn-ad-step-2').innerText = 'Paso 2: Bloqueado';
+            document.getElementById('btn-ad-step-2').disabled = true;
+            document.getElementById('btn-ad-step-2').style.cursor = 'not-allowed';
+
+                        document.getElementById('btn-ad-step-3').style.background = '#333';
+            document.getElementById('btn-ad-step-3').style.color = '#666';
+            document.getElementById('btn-ad-step-3').innerText = 'Paso 3: Bloqueado';
+            document.getElementById('btn-ad-step-3').disabled = true;
+            document.getElementById('btn-ad-step-3').style.cursor = 'not-allowed';
+            document.getElementById('btn-ad-step-3').style.display = 'block';
+
+
+            document.getElementById('btn-ad-final').style.display = 'none';
+            document.getElementById('ad-unlock-status').innerText = '';
+
+            modal.style.display = 'block';
+            overlay.classList.add('active');
+        };
+
+        window.executeAdStep = function(step) {
+            const statusEl = document.getElementById('ad-unlock-status');
+            
+            if (step === 1) {
+                window.open('https://omg10.com/4/10744381', '_blank');
+                const btn = document.getElementById('btn-ad-step-1');
+                btn.disabled = true;
+                btn.style.cursor = 'not-allowed';
+                btn.style.background = '#333';
+                btn.style.color = '#666';
+                
+                let time = 15;
+                const timer = setInterval(() => {
+                    btn.innerText = `Completando en ${time}s...`;
+                    time--;
+                    if(time < 0) {
+                        clearInterval(timer);
+                        btn.innerText = 'Paso 1: Completado ✓';
+                        btn.style.color = 'var(--neon-green)';
+                        
+                        const nextBtn = document.getElementById('btn-ad-step-2');
+                        nextBtn.disabled = false;
+                        nextBtn.style.cursor = 'pointer';
+                        nextBtn.style.background = 'var(--neon-blue)';
+                        nextBtn.style.color = '#000';
+                        nextBtn.innerText = 'Paso 2: Ver Publicidad';
+                    }
+                }, 1000);
+            } 
+            else if (step === 2) {
+                window.open('https://omg10.com/4/10744381', '_blank');
+                const btn = document.getElementById('btn-ad-step-2');
+                btn.disabled = true;
+                btn.style.cursor = 'not-allowed';
+                btn.style.background = '#333';
+                btn.style.color = '#666';
+                
+                let time = 15;
+                const timer = setInterval(() => {
+                    btn.innerText = `Completando en ${time}s...`;
+                    time--;
+                    if(time < 0) {
+                        clearInterval(timer);
+                        btn.innerText = 'Paso 2: Completado ✓';
+                        btn.style.color = 'var(--neon-green)';
+                        
+                        const nextBtn = document.getElementById('btn-ad-step-3');
+                        nextBtn.disabled = false;
+                        nextBtn.style.cursor = 'pointer';
+                        nextBtn.style.background = 'var(--neon-purple)';
+                        nextBtn.style.color = '#fff';
+                        nextBtn.innerText = 'Paso 3: Ver Publicidad Final';
+                    }
+                }, 1000);
+            }
+            else if (step === 3) {
+                window.open('https://ukuleqasforsalesre.com?8GjaE=1248841', '_blank');
+                const btn = document.getElementById('btn-ad-step-3');
+                btn.disabled = true;
+                btn.style.cursor = 'not-allowed';
+                btn.style.background = '#333';
+                btn.style.color = '#666';
+                
+                let time = 15;
+                statusEl.innerText = 'Desbloqueando acceso seguro...';
+                const timer = setInterval(() => {
+                    btn.innerText = `Revelando enlace en ${time}s...`;
+                    time--;
+                    if(time < 0) {
+                        clearInterval(timer);
+                        btn.style.display = 'none';
+                        statusEl.innerText = '';
+                        
+                        const finalBtn = document.getElementById('btn-ad-final');
+                        finalBtn.style.display = 'block';
+                        finalBtn.href = window.currentAdFinalLink;
+                        finalBtn.onclick = function() {
+                            document.getElementById('ad-unlock-modal').style.display = 'none';
+                            document.getElementById('dl-overlay').classList.remove('active');
+                        };
+                    }
+                }, 1000);
+            }
         };
 
         window.addCarouselInput = function(val = "") {
@@ -1946,3 +2212,4 @@
     </script>
 </body>
 </html>
+
